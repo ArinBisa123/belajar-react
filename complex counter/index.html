@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Complex Counter</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      .mainContainer {
+        width: 500px;
+      }
+      .container-1 {
+        display: flex;
+
+        justify-content: space-evenly;
+      }
+      .increaseButton,
+      .decreaseButton {
+        width: 44px;
+        height: 44px;
+      }
+
+      .resetContainer {
+        display: flex;
+        justify-content: center;
+      }
+      .resetButton {
+        width: 70px;
+        height: 44px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function SimpleCounter() {
+        const [number, setNumber] = React.useState(0);
+        const [text, setText] = React.useState("");
+        const [isResetEnabled, setIsResetEnabled] = React.useState(false);
+
+        function handleIncrement() {
+          const newNumber = number + 1;
+          setNumber(newNumber);
+        }
+
+        function handleDecrement() {
+          const newNumber = number - 1;
+          setNumber(newNumber);
+        }
+
+        function handleReset() {
+          setNumber(0);
+        }
+
+        React.useEffect(() => {
+          if (number > 9 || number < 0) {
+            setText("Done!");
+            setIsResetEnabled(true);
+          } else {
+            setText("");
+            setIsResetEnabled(false);
+          }
+        }, [number]);
+
+        return (
+          <>
+            <div className="mainContainer">
+              <div className="container-1">
+                <div className="increaseContainer">
+                  <button
+                    disabled={number > 9 || number < 0}
+                    className="increaseButton"
+                    onClick={handleIncrement}
+                  >
+                    +
+                  </button>
+                </div>
+                <div className="text">
+                  <p>{text || number}</p> {/* Show "Done!" or the number */}
+                </div>
+                <div className="decreaseContainer">
+                  <button
+                    disabled={number < 0 || number > 9}
+                    className="decreaseButton"
+                    onClick={handleDecrement}
+                  >
+                    -
+                  </button>
+                </div>
+              </div>
+              <div className="resetContainer">
+                <button
+                  disabled={!isResetEnabled}
+                  className="resetButton"
+                  onClick={handleReset}
+                >
+                  Reset
+                </button>
+              </div>
+            </div>
+          </>
+        );
+      }
+      const container = document.getElementById("root");
+      const root = ReactDOM.createRoot(container);
+      root.render(<SimpleCounter />);
+    </script>
+  </body>
+</html>
