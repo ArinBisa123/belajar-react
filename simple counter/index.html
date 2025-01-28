@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Counter</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+      .mainContainer {
+        width: 500px;
+      }
+      .container-1 {
+        display: flex;
+
+        justify-content: space-evenly;
+      }
+      .increaseButton,
+      .decreaseButton {
+        width: 44px;
+        height: 44px;
+      }
+
+      .resetContainer {
+        display: flex;
+        justify-content: center;
+      }
+      .resetButton {
+        width: 70px;
+        height: 44px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      function SimpleCounter() {
+        const [number, setNumber] = React.useState(0);
+
+        function handleIncrement() {
+          setNumber(number + 1);
+        }
+        function handleDecrement() {
+          setNumber(number - 1);
+        }
+        function handleReset() {
+          setNumber(0);
+        }
+        return (
+          <>
+            <div className="mainContainer">
+              <div className="container-1">
+                <div className="increaseContainer">
+                  <button className="increaseButton" onClick={handleIncrement}>
+                    +
+                  </button>
+                </div>
+                <div className="text">
+                  <p>{number}</p>
+                </div>
+                <div className="decreaseContainer">
+                  <button className="decreaseButton" onClick={handleDecrement}>
+                    -
+                  </button>
+                </div>
+              </div>
+              <div className="resetContainer">
+                <button className="resetButton" onClick={handleReset}>
+                  Reset
+                </button>
+              </div>
+            </div>
+          </>
+        );
+      }
+      const container = document.getElementById("root");
+      const root = ReactDOM.createRoot(container);
+      root.render(<SimpleCounter />);
+    </script>
+  </body>
+</html>
